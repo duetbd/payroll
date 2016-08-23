@@ -1,0 +1,32 @@
+<div class="section-detail">
+    <div class="header">
+        <span class="title">
+            Detail -
+            <span class="object"> {{employeeClass}}</span>
+        </span>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <col class="label"></col>
+            <col class="value"></col>
+            <tbody>
+                <tr>
+                    <td class="label">Name:</td>
+                    <td class="value"> {{ employeeClass.name }}</td>
+                </tr>
+                <tr>
+                    <td class="label">description:</td>
+                    <td class="value"> {{ employeeClass.description }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Created At:</td>
+                    <td class="value"> {{ employeeClass.created_at }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Last Modified At:</td>
+                    <td class="value"> {{ employeeClass.modified_at }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

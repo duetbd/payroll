@@ -1,0 +1,11 @@
+{% extends 'account_base.html' %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+    <div class="section detail">
+        {% include "account/employee/detailSection.html" %}
+         
+        
+    </div>
+    {% include "common/list.html" %}
+{% endblock %}

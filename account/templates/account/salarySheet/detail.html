@@ -1,0 +1,63 @@
+{% extends 'account_base.html' %}
+
+{% block content %}
+    <div class="salary-sheet-summary">
+        <div class="title">
+            <span class="title ">{{object}}</span>
+        </div>
+        <div class="detail">
+            <span class="detail-field">
+                <span class="label">Total Payment :</span>
+                <span class="value"> {{totalPayment}}</span>
+            </span>
+            <span class="detail-field">
+                <span class="label">Total Deduction :</span>
+                <span class="value"> {{totalDeduction}}</span>
+            </span>
+            <span class="detail-field">
+                <span class="label">Net Payment :</span>
+                <span class="value"> {{netPayment}}</span>
+            </span>
+            <span class=" detail-field right">
+                <span class="label">Month Ending:</span>
+                <span class="value">{{object.date|date:"F, Y"}} </span> 
+            </span>
+        </div>
+    </div>
+    {% include 'account/employee/detailSection.html' with employee=employee %}
+    <div class="salary-sheet-details">
+        <div class="salary-sheet-section allowance col-sm-6">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <th>Allowances</th>
+                    <th>Amount</th>
+                </thead>
+                <tbody>
+                    {% for allowance in allowances%}
+                            <tr>
+                                <td>{{allowance.allowance_deduction}}</td>
+                                <td>{{allowance.amount}}</td>
+                            </tr>
+                    {% endfor %}  
+                </tbody>
+            </table>
+        </div>
+
+        <div class="salary-sheet-section allowance col-sm-6">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <th>Deductions</th>
+                    <th>Amount</th>
+                </thead>
+                <tbody>
+                    {% for deduction in deductions%}
+                            <tr>
+                                <td>{{deduction.allowance_deduction}}</td>
+                                <td>{{deduction.amount}}</td>
+                            </tr>
+                    {% endfor %}  
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'account_base.html' %}
+
+{% block content %}
+
+    {% include 'account/employee/detailSection.html' with employee=employee %}
+     <div class="manage-sheet section-edit">
+        <form class="form" action="" method="post">{% csrf_token %}
+            <div class="table-container">
+                <div class="manage-sheet-section allowance col-sm-6">
+                    <div class="body">
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Pay and Allowances</th>
+                                    <th>Applicable</th>
+                                    <th>Default Value</th>
+                                    <th>Percentage</th>
+                                 </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in allowanace_formset %}
+                                <tr>
+                                    <td>{{form.allowance_deduction}}</td>
+                                    {% for field in form.visible_fields %}
+                                        <td>{{ field }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}     
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="salary-sheet-section deduction col-sm-6">
+                    <div class="body">
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                                    <tr>
+                                        <th>Deductions</th>
+                                        <th>Applicable</th>
+                                        <th>Default Value</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                                {% for form in deduction_formset %}
+                                    <tr>
+                                        <td>{{form.allowance_deduction}}</td>
+                                        {% for field in form.visible_fields %}
+                                            <td>{{ field }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="button-groups col-sm-offset-10">
+                    <input class = 'btn btn-warning' type="reset">
+                    <button type="submit" class="btn btn-success"> Submit </button>
+                </div>
+            </div>
+        </form>
+    </div>      
+{% endblock %}

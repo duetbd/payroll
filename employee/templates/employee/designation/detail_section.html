@@ -1,0 +1,36 @@
+<div class="section-detail">
+    <div class="header">
+        <span class="title">
+            Detail -
+            <span class="object"> {{designation}}</span>
+        </span>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <col class="label"></col>
+            <col class="value"></col>
+            <tbody>
+                <tr>
+                    <td class="label">Name:</td>
+                    <td class="value"> {{ designation.name }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Grade:</td>
+                    <td class="value"> {{ designation.grade }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Description:</td>
+                    <td class="value"> {{ designation.description }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Created At:</td>
+                    <td class="value"> {{ designation.created_at }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Last Modified At:</td>
+                    <td class="value"> {{ designation.modified_at }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+{% extends 'account_base.html' %}
+
+{% block content %}
+<div class="configure-employee-class section-edit">
+        <div class="title">
+                Configure Default Values For - 
+                    <span class="object">{{allowanceDeduction}}</span>
+        </div>
+        <form class="form" action="" method="post">{% csrf_token %}
+            <div class="table-container">
+                <div class="configure-employee-classsection  col-sm-6">
+                    <div class="body">
+                        <table class="table table-condensed table-hover">
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                    <td>{{form.employee_class}}</td>
+                                    {% for field in form.visible_fields %}
+                                        <td>{{ field }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}     
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="button-groups col-sm-offset-4">
+                    <input class = 'btn btn-warning' type="reset">
+                    <button type="submit" class="btn btn-success"> Submit </button>
+                </div>
+            </div>
+        </form>
+    </div>      
+{% endblock %}

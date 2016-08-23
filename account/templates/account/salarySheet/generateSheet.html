@@ -1,0 +1,60 @@
+{% extends 'account_base.html' %}
+
+{% block content %}
+    {% include 'account/employee/detailSection.html' with employee=employee %}
+    <div class="salary-sheet section-edit">
+        
+        <form class="form" action="" method="post">{% csrf_token %}
+            <div class="table-container">
+                <div class="salary-sheet-section salary-sheet right">
+                     {% for field in salary_sheet_form %}
+                        <label class="control-label"> {{ field.label_tag }}</label>
+                        <span >{{ field }}</span>
+                    {% endfor %}
+                </div>
+                <div class="clear"></div>
+                <div class="salary-sheet-section allowance col-sm-6">
+                    <div class="heading">
+                        <span> Pay and Allowances</span>
+                    </div>
+                    
+                    <table class="table table-condensed table-hover">
+                    {% for form in allowanace_formset %}
+                            <tr>
+                                <td>{{form.allowance_deduction}}</td>
+                                {% for field in form.visible_fields %}
+                                    <td><label> {{ field.label_tag }}</label></td>
+                                    <td>{{ field }}</td>
+                                {% endfor %}
+                            </tr>
+                    {% endfor %}
+                    </table>
+
+                </div>
+
+                <div class="salary-sheet-section deduction col-sm-6">
+                    <div class="heading">
+                        <span> Deductions</span>
+                    </div>
+                    <div class="body">
+                        <table class="table table-condensed table-hover">
+                        {% for form in  deduction_formset %}
+                                <tr>
+                                    <td>{{form.allowance_deduction}}</td>
+                                    {% for field in form.visible_fields %}
+                                        <td><label> {{ field.label_tag }}</label></td>
+                                        <td>{{ field }}</td>
+                                    {% endfor %}
+                                </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="button-groups col-sm-offset-10">
+                <input class = 'btn btn-warning' type="reset">
+                <button type="submit" class="btn btn-success"> Submit </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

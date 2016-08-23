@@ -1,0 +1,107 @@
+{% extends 'account_base.html' %}
+{% load querystring from django_tables2 %}
+{% load i18n %}
+{% load blocktrans trans from i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="panel panel-heading">
+    <h4>{{table.attrs.title}}</h4>
+</div>
+
+    {% if table.attrs.add_link %}
+        {% for link in table.attrs.add_link %}
+            <a class="btn btn-default" data-toggle='tooltip'  href="{% url link.url %}">
+                <span class='{{ link.icon }}'></span> 
+            </a>
+        {% endfor %}
+    {% endif %}
+
+<form class="form form-inline search right" action="" method="get">
+    {% crispy filter.form filter.form.helper %}
+    <button type="submit" class="btn btn-default">
+      <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+ </form>
+
+<div class="table-container">
+        <table class="table table-condensed table-hover"{% if table.attrs %} {{ table.attrs.as_html }}{% endif %}>
+            <thead>
+            <tr>
+                {% for column in table.columns %}
+                    {% if column.orderable %}
+                        <th {{ column.attrs.th.as_html }}>
+                            <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}">{{ column.header }}</a>
+                        </th>
+                    {% else %}
+                        <th {{ column.attrs.th.as_html }}>{{ column.header }}</th>
+                    {% endif %}
+
+                {% endfor %}
+                <th>Actions</th>
+            </tr>
+            </thead>
+                <tbody>
+                {% for row in table.page.object_list %} {# support pagination #}
+                    <tr {{ row.attrs.as_html }}>
+                        {% for column, cell in row.items %}
+                            <td {{ column.attrs.td.as_html }}>{{ cell }}</td>
+                        {% endfor %}
+                        <td class="action">
+                            {% for action in table.attrs.actions %}
+                            <a class="btn btn-default" data-toggle="tooltip" title ='{{action.tooltip}}' href="{% url action.url pk=row.record.id %}">
+                                <span class='{{ action.icon }}'></span> 
+                            </a>
+                            {% endfor %}
+                            {% if record.providentFundProfile %}
+                                <a class="btn btn-default" data-toggle="tooltip" title ='create Provident Fund Profile' href="{% url 'account:provident-fund-profile-create' %}"><span class='glyphicon glyphicon-usd'></span> </a>
+                            {% else %}
+                                <a class="btn btn-default" data-toggle="tooltip" title ='edit Provident Fund Profile' href="{% url 'account:provident-fund-profile-update' pk=row.record.id %}"><span class='glyphicon glyphicon-pencil'></span> </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    
+                    {% trans "no results" as table_empty_text %}
+                    <tr>
+                        <td colspan="{{ table.columns|length }}">{{ table.empty_text|default:table_empty_text }}</td>
+                    </tr>
+                    
+                {% endfor %}
+                </tbody>
+            {% if table.has_footer %}
+            <tfoot>
+                <tr>
+                {% for column in table.columns %}
+                    <td>{{ column.footer }}</td>
+                {% endfor %}
+                </tr>
+                </tr>
+
+            </tfoot>
+            {% endif %}
+        </table>
+    {% if table.page and table.paginator.num_pages > 1 %}
+        <ul class="pager">
+            {% if table.page.has_previous %}
+            <li class="previous">
+                <a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}" class="btn btn-default">
+                    {% trans 'previous' %}
+                </a>
+            </li>
+            {% endif %}
+            <li class="cardinality">
+                {% blocktrans with table.page.number as current and table.paginator.num_pages as total %}Page {{ current }} of {{ total }}{% endblocktrans %}
+            </li>
+            {% if table.page.has_next %}
+            <li class="next">
+                <a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}" class="btn btn-default">
+                    {% trans 'next' %}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
+
+{% endblock %}
